@@ -9,10 +9,6 @@ apt-get install nginx
 ```
 
 ## Step 2
-I want to clone my project to "/var/www" directory. So I move to /var/www with 
-```
-cd /var/www
-```
-and clone my project here.
+I want to clone my project to "/var/www" directory. So I move to /var/www with ```cd /var/www``` and clone my project here.
 
 ## Step 3

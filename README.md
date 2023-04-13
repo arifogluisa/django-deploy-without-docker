@@ -31,3 +31,25 @@ ExecStart=/var/www/BlogProject/.venv/bin/gunicorn --workers 5 --bind unix:/run/g
 [Install]
 WantedBy=multi-user.target
 ```
+##
+gunicorn.socket file:
+
+```
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/run/gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+```
+##
+
+you can check gunicorn.service file for errors:
+
+```
+systemd-analyze verify gunicorn.service
+```
+
+## Step 4 - NGINX setup

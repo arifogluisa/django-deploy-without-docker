@@ -53,3 +53,53 @@ systemd-analyze verify gunicorn.service
 ```
 
 ## Step 4 - NGINX setup
+Go to ```/etc/nginx/sites-available/``` and create a file without extension, I will name it ```default``` . You can name it with name of your project.
+
+```
+server {
+    listen 80;
+    server_name example.com;  # if you don't have domain yet, you can write your server IP here.
+    
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /var/www/BlogProject;           # path to static folder
+    }
+    
+    location /media/ {
+        root /var/www/BlogProject;           # path to media folder
+    }
+    
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    }
+}
+```
+
+##
+
+to see logs, create a "log" folder, and create nginx-access.log and nginx-error.log files and use:
+
+```
+access_log /var/www/BlogProject/log/nginx-access.log;
+  error_log /var/www/BlogProject/log/nginx-error.log;
+```
+
+instead of:
+
+```
+location = /favicon.ico { access_log off; log_not_found off; }
+```
+
+##
+In order to create a symbolic link to a file in the ```/etc/nginx/site-enabled/``` directory, enter the following command: 
+
+```
+sudo ln -s /etc/nginx/sites-available/geekhero /etc/nginx/sites-enabled/
+```
+##
+With any changes to the original file, run the command:
+
+```
+sudo systemctl restart nginx
+```
